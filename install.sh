@@ -6,7 +6,7 @@ gem install lolcat
 
 # Создание директории и клонирование репозитория
 mkdir -p ~/.lvrr-analyzer
-git clone https://github.com/ваш-логин/lvrr-analyzer.git ~/.lvrr-analyzer || {
+git clone https://github.com/undegroundone/lvrr-analyzer.git ~/.lvrr-analyzer || {
     echo "Ошибка при клонировании репозитория" | lolcat
     exit 1
 }
