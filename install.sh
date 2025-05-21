@@ -1,27 +1,22 @@
 #!/bin/bash
 
 # Установка зависимостей
-pkg install -y git ruby figlet
-gem install lolcat
+pkg install -y git ruby figlet > /dev/null 2>&1
+gem install lolcat > /dev/null 2>&1
 
-# Создание директории и клонирование репозитория
+echo "Установка LVRR Analyzer..." | lolcat
+
+# Создаем директорию
 mkdir -p ~/.lvrr-analyzer
-git clone https://github.com/undegroundone/lvrr-analyzer.git ~/.lvrr-analyzer || {
-    echo "Ошибка при клонировании репозитория" | lolcat
-    exit 1
-}
 
-# Создание исполняемого файла
-cat > /data/data/com.termux/files/usr/bin/lvrr << 'EOL'
-#!/bin/bash
-# Автоматическое обновление и запуск
-cd ~/.lvrr-analyzer
-git pull origin main
-./analyzer.sh
-EOL
+# Скачиваем сырой код напрямую (без git clone)
+curl -sL https://raw.githubusercontent.com/undegroundone/lvrr-analyzer/main/analyzer.sh > ~/.lvrr-analyzer/analyzer.sh
 
-# Даем права на выполнение
-chmod +x /data/data/com.termux/files/usr/bin/lvrr
+# Делаем исполняемым
 chmod +x ~/.lvrr-analyzer/analyzer.sh
 
-echo "Установка завершена! Теперь используйте команду 'lvrr'" | lolcat
+# Создаем алиас для запуска
+echo "alias lvrr='~/.lvrr-analyzer/analyzer.sh'" >> ~/.bashrc
+source ~/.bashrc
+
+echo "Готово! Теперь используйте команду 'lvrr'" | lolcat
